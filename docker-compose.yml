@@ -1,0 +1,66 @@
+version: '3'
+services:
+  influxdb:
+    image: pabcargam/pablodev_influxdb:latest
+    volumes:
+      - /home/pablo/TFG/TFG_appColectora/influx:/root/.influxdbv2
+    ports:
+      - "8086:8086"
+    restart: always
+    networks:
+      - red-App
+
+  telegraf:
+    image: pabcargam/pablodev_telegraf:latest
+    links:
+      - influxdb
+    depends_on:
+      - influxdb
+    restart: always
+    networks:
+      - red-App
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=DBadmin
+      - POSTGRES_DB=authentication
+    volumes:
+      - pgpersistance:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - red-App
+
+  backend:
+    image: pabcargam/backend:latest
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - red-App
+
+  cors:
+    image: redocly/cors-anywhere
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - red-App
+
+  frontend:
+    image: pabcargam/frontend:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - red-App
+
+volumes:
+  pgpersistance:
+
+networks:
+  red-App:
+    driver: bridge
