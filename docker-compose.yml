@@ -3,7 +3,7 @@ services:
   influxdb:
     image: pabcargam/rasp_influxdb:latest
     volumes:
-      - /home/pablo/TFG/TFG_appColectora/influx:/var/lib/influxdb2
+      - /home/pablodev/NeliumAnalytics/TFG_appColectora/influx:/var/lib/influxdb2
     ports:
       - "8086:8086"
     restart: always
