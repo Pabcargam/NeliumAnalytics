@@ -33,7 +33,7 @@ services:
       - red-App
 
   backend:
-    image: rasp/backend:latest
+    image: pabcargam/rasp_backend:latest
     depends_on:
       - postgres
     restart: always
