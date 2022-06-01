@@ -1,9 +1,9 @@
 version: '3'
 services:
   influxdb:
-    image: pabcargam/pablodev_influxdb:latest
+    image: pabcargam/rasp_influxdb:latest
     volumes:
-      - /home/pablo/TFG/TFG_appColectora/influx:/root/.influxdbv2
+      - /home/pablo/TFG/TFG_appColectora/influx:/var/lib/influxdb2
     ports:
       - "8086:8086"
     restart: always
@@ -11,7 +11,7 @@ services:
       - red-App
 
   telegraf:
-    image: pabcargam/pablodev_telegraf:latest
+    image: pabcargam/rasp_telegraf:latest
     links:
       - influxdb
     depends_on:
@@ -33,7 +33,7 @@ services:
       - red-App
 
   backend:
-    image: pabcargam/backend:latest
+    image: rasp/backend:latest
     depends_on:
       - postgres
     restart: always
@@ -41,7 +41,7 @@ services:
       - red-App
 
   cors:
-    image: redocly/cors-anywhere
+    image: pabcargam/rasp_cors-anywhere
     ports:
       - "8080:8080"
     restart: always
@@ -49,7 +49,7 @@ services:
       - red-App
 
   frontend:
-    image: pabcargam/frontend:latest
+    image: pabcargam/rasp_frontend:latest
     ports:
       - "3000:3000"
     depends_on:
