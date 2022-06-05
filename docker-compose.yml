@@ -6,7 +6,6 @@ services:
       - /home/pablodev/Desktop/NeliumAnalytics/TFG_appColectora/influx:/var/lib/influxdb2
     ports:
       - "8086:8086"
-    restart: always
     networks:
       - red-App
 
@@ -16,7 +15,6 @@ services:
       - influxdb
     depends_on:
       - influxdb
-    restart: always
     networks:
       - red-App
 
@@ -28,7 +26,6 @@ services:
       - POSTGRES_DB=authentication
     volumes:
       - pgpersistance:/var/lib/postgresql/data
-    restart: always
     networks:
       - red-App
 
@@ -36,7 +33,6 @@ services:
     image: pabcargam/rasp_backend:latest
     depends_on:
       - postgres
-    restart: always
     networks:
       - red-App
 
@@ -44,7 +40,6 @@ services:
     image: pabcargam/rasp_cors-anywhere
     ports:
       - "8080:8080"
-    restart: always
     networks:
       - red-App
 
@@ -54,7 +49,6 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    restart: always
     networks:
       - red-App
 
